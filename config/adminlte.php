@@ -235,11 +235,22 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text' => 'Planos',
+            'url'  => 'admin/plans',
+            'icon' => 'fa fa-fw fa-list',
+            'icon_color' => 'yellow',
+        ],
+        [
+            'text' => 'Prefis',
+            'url'  => 'admin/profiles',
+            'icon' => 'fas fa-fw fa-user-friends',
+            'icon_color' => 'info',
+        ],
+        [
+            'text' => 'Permissões',
+            'url'  => 'admin/permissions',
+            'icon' => 'fas fa-fw fa-user-lock',
+            'icon_color' => 'info',
         ],
         ['header' => 'account_settings'],
         [
@@ -410,6 +421,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'Toastr' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js',
                 ],
             ],
         ],
