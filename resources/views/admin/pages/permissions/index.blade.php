@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Perfis')
+@section('title', 'Permissões')
 
 @section('content_header')
     <ol class="breadcrumb ">
         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"></a>Dashboard</li>
-        <li class="breadcrumb-item"><a href="{{ route('profiles.index') }}" class="active">Perfis</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('permissions.index') }}" class="active">Permissões</a></li>
     </ol>
     <div class="w3-container">
         <div class="row justify-content-md-between">
-            <h1>Perfis &nbsp;&nbsp; <a href="{{ route('profiles.create') }}" class="btn btn-dark"><i
+            <h1>Permissões &nbsp;&nbsp; <a href="{{ route('permissions.create') }}" class="btn btn-dark"><i
                         class="fa fa-plus-square"></i>&nbsp; Adicionar</a></h1>
-            <form action="{{ route('profiles.search') }}" class="form form-inline" method="POST">
+            <form action="{{ route('permissions.search') }}" class="form form-inline" method="POST">
                 @csrf
                 <input type="text" name="filter" placeholder="Nome" class="form-control"
                     value="{{ $filters['filter'] ?? '' }}">
@@ -24,7 +24,7 @@
 
 @section('content')
     <div class="w3-card-4">
-        @if ($profiles->count())
+        @if ($permissions->count())
             <div class="table-responsive">
                 <table class="table table-hover table-striped table-bordered">
                     <thead class="w3-dark-gray">
@@ -34,14 +34,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($profiles as $profile)
+                        @foreach ($permissions as $permission)
                             <tr class="text-bold">
-                                <td>{{ $profile->name }}</td>
+                                <td>{{ $permission->name }}</td>
 
                                 <td class="w3-center">
-                                    <a href="{{ route('profiles.edit', $profile->id) }}" class="w3-button w3-white w3-border w3-border-dark-gray w3-text-orange
+                                    <a href="{{ route('permissions.edit', $permission->id) }}" class="w3-button w3-white w3-border w3-border-dark-gray w3-text-orange
                                              w3-round-large w3-hover-orange"><i class="fas fa-pen-alt"></i></a>
-                                    <a href="{{ route('profiles.show', $profile->id) }}" class="w3-button w3-white w3-border w3-border-dark-gray w3-text-indigo
+                                    <a href="{{ route('permissions.show', $permission->id) }}" class="w3-button w3-white w3-border w3-border-dark-gray w3-text-indigo
                                             w3-round-large w3-hover-indigo"><i class="fas fa-eye"></i></a>
 
                                 </td>
@@ -59,9 +59,9 @@
 
     <div class="card-footer">
         @if (isset($filters))
-            {{ $profiles->appends($filters)->links() }}
+            {{ $permissions->appends($filters)->links() }}
         @else
-            {{ $profiles->links() }}
+            {{ $permissions->links() }}
         @endif
 
     </div>

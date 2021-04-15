@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\Admin\ACL;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdatePermissionRequest;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+
 
 class PermissionController extends Controller
 {
+    protected $repository;
+
+    public function __construct(Permission $permission)
+    {
+        $this->repository = $permission;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = $this->repository->paginate();
+
+        return view('admin.pages.permissions.index', compact('permissions'));
     }
 
     /**
@@ -24,7 +36,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.permissions.create');
     }
 
     /**
@@ -33,9 +45,12 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdatePermissionRequest $request)
     {
-        //
+        $this->repository->create($request->all());
+
+        return redirect()->route('permissions.index')
+                         ->with('record_added', 'Criado com sucesso!');
     }
 
     /**
@@ -46,7 +61,14 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        //
+        $permission = $this->repository->where('id', $id)->first();
+
+        if(!$permission)
+            return redirect()->back();
+
+        return view('admin.pages.permissions.show', [
+            'permission' => $permission,
+        ]);
     }
 
     /**
@@ -57,7 +79,14 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permission = $this->repository->where('id', $id)->first();
+
+        if(!$permission)
+            return redirect()->back();
+
+        return view('admin.pages.permissions.edit', [
+            'permission' => $permission,
+        ]);
     }
 
     /**
@@ -67,9 +96,18 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdatePermissionRequest $request, $id)
     {
-        //
+        $permission = $this->repository->where('id', $id)->first();
+
+        
+        if(!$permission)
+            return redirect()->back();
+        
+        $permission->update($request->all());
+
+        return redirect()->route('permissions.index')
+                         ->with('record_changed', 'Alterado com sucesso!');
     }
 
     /**
@@ -80,6 +118,31 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission = $this->repository->where('id', $id)->first();
+
+        
+        if(!$permission)
+            return redirect()->back();
+        
+        $permission->delete();
+
+        return redirect()->route('permissions.index')
+                         ->with('record_exclused', 'Excluído com sucesso!');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->only('filter');
+
+        $permissions = $this->repository
+                         ->where(function($query) use ($request){
+                             if($request->filter){
+                                 $query->where('name', 'LIKE', "%{$request->filter}%");
+                                 $query->orWhere('description', 'LIKE', "%{$request->filter}%");
+                             }
+                            })
+                         ->paginate();
+
+        return view('admin.pages.permissions.index', compact('permissions'), compact('filters'));
     }
 }
