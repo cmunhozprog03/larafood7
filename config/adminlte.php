@@ -241,7 +241,7 @@ return [
             'icon_color' => 'yellow',
         ],
         [
-            'text' => 'Prefis',
+            'text' => 'Perfis',
             'url'  => 'admin/profiles',
             'icon' => 'fas fa-fw fa-user-friends',
             'icon_color' => 'info',
