@@ -122,7 +122,7 @@ class PlanController extends Controller
         $plan->delete();
 
         return redirect()->route('plans.index')
-                         ->with('record_changed', 'Alterado com sucesso!');
+                         ->with('record_exclused', 'Excluído com sucesso!');
     }
 
     public function search(Request $request)

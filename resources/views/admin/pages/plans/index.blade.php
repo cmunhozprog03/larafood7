@@ -42,6 +42,8 @@
                                 <th>{{ number_format($plan->price, '2', ',', '.') }}</th>
 
                                 <td class="w3-center">
+                                    <a href="{{ route('details.plan.index', $plan->url) }}" class="btn btn-info"><i class="fas fa-list-alt"></i></a>
+
                                     <a href="{{ route('plans.edit', $plan->url) }}" class="w3-button w3-white w3-border w3-border-dark-gray w3-text-orange
                                              w3-round-large w3-hover-orange"><i class="fas fa-pen-alt"></i></a>
                                     <a href="{{ route('plans.show', $plan->url) }}" class="w3-button w3-white w3-border w3-border-dark-gray w3-text-indigo
